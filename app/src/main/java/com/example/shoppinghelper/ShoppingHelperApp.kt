@@ -1,7 +1,6 @@
 package com.example.shoppinghelper
 
 
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -22,13 +21,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.shoppinghelper.ui.composable.LoginPanel
 import com.example.shoppinghelper.ui.composable.MainScreen
-import com.example.shoppinghelper.ui.composable.AdminPanel
 
 
 enum class Screens(@StringRes val title: Int) {
     Main(title = R.string.app_name),
-    AdminPanel(title = R.string.admin_panel),
+    LoginPanel(title = R.string.login_panel),
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,8 +37,9 @@ fun ShoppingHelperApp(
 ) {
     Scaffold(
         topBar = {
-            val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
-            val showBackButton = currentRoute == Screens.AdminPanel.name
+            val currentRoute =
+                navController.currentBackStackEntryAsState().value?.destination?.route
+            val showBackButton = currentRoute == Screens.LoginPanel.name
 
             TopAppBar(
                 title = { Text(text = currentRoute.toString()) },
@@ -54,7 +54,7 @@ fun ShoppingHelperApp(
                     if (!showBackButton) {
                         IconButton(
                             onClick = {
-                                navController.navigate(Screens.AdminPanel.name)
+                                navController.navigate(Screens.LoginPanel.name)
                             }
                         ) {
                             Icon(Icons.Filled.AccountCircle, contentDescription = "Admin Panel")
@@ -75,8 +75,8 @@ fun ShoppingHelperApp(
             composable(route = Screens.Main.name) {
                 MainScreen(navController = navController)
             }
-            composable(route = Screens.AdminPanel.name) {
-                AdminPanel(navController = navController)
+            composable(route = Screens.LoginPanel.name) {
+                LoginPanel(navController = navController)
             }
         }
     }

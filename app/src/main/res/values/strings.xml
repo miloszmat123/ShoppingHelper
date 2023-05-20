@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">ShoppingHelper</string>
-    <string name="admin_panel">Admin Panel</string>
+    <string name="login_panel">Login Panel</string>
     <string name="main_screen_text">Click a button to read NFC tag on a shelf!</string>
 </resources>
