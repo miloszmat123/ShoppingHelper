@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ShoppingHelper</string>
+    <string name="admin_panel">Admin Panel</string>
 </resources>
