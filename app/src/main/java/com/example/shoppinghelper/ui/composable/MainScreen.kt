@@ -16,10 +16,13 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.shoppinghelper.R
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    navController: NavController
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
