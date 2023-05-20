@@ -17,6 +17,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.shoppinghelper.ui.composable.MainScreen
 
 
 enum class Screens(@StringRes val title: Int) {
@@ -47,7 +48,7 @@ fun ShoppingHelperApp(
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(route = Screens.Main.name) {
-
+                MainScreen()
             }
             composable(route = Screens.AdminPanel.name) {
             }
