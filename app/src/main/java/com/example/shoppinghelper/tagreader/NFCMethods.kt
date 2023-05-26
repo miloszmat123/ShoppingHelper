@@ -1,11 +1,10 @@
-package com.example.shoppinghelper;
+package com.example.shoppinghelper.tagreader;
 
 import android.content.Context
 import android.nfc.NfcAdapter
 import android.nfc.Tag
-import android.os.Handler
-import android.os.Looper
 import android.widget.Toast
+import com.example.shoppinghelper.tagreader.NFCManager
 import java.util.concurrent.CountDownLatch
 
 class NFCMethods(private val context: Context) {

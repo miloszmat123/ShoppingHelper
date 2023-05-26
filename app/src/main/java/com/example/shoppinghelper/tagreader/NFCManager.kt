@@ -1,4 +1,4 @@
-package com.example.shoppinghelper
+package com.example.shoppinghelper.tagreader
 
 import android.app.Activity
 import android.content.Context
