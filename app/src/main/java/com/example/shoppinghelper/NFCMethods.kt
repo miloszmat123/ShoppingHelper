@@ -29,15 +29,11 @@ class NFCMethods(private val context: Context) {
 
         // Enable foreground dispatch to capture NFC tag
         nfcManager.enableNFC()
-        Toast.makeText(context, "nfc enabled", Toast.LENGTH_SHORT).show()
 
         // Wait for the NFC tag to be scanned
         val tag = waitForTag()
-        Toast.makeText(context, "waiting for tag", Toast.LENGTH_SHORT).show()
 
-        // Disable foreground dispatch
         nfcManager.disableNFC()
-        Toast.makeText(context, "nfc disabled", Toast.LENGTH_SHORT).show()
 
         if (tag != null) {
             // Read the NFC tag
