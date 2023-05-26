@@ -11,6 +11,7 @@ import android.nfc.tech.Ndef
 class NFCManager(private val context: Context, private val nfcAdapter: NfcAdapter?) :
     NfcAdapter.ReaderCallback {
 
+
     var onTagDiscovered: ((tag: Tag) -> Unit)? = null
 
     fun enableNFC() {
@@ -32,7 +33,7 @@ class NFCManager(private val context: Context, private val nfcAdapter: NfcAdapte
 
     fun readNFC(tag: Tag): String? {
         val ndef = Ndef.get(tag)
-        ndef?.connect()
+//        ndef?.connect()
         val ndefMessage = ndef?.cachedNdefMessage
         val data = ndefMessage?.records?.getOrNull(0)?.payload // Assuming there is only one record
         ndef?.close()
