@@ -20,12 +20,14 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.shoppinghelper.tagreader.NFCMethods
 import com.example.shoppinghelper.R
+import com.example.shoppinghelper.tagreader.TextReader
 
 @Composable
 fun MainScreen(
     navController: NavController
 ) {
     val nfcMethods = NFCMethods(LocalContext.current)
+    val textReader = TextReader(LocalContext.current)
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -38,7 +40,10 @@ fun MainScreen(
             textAlign = TextAlign.Center)
         Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
             Button(
-                onClick = { nfcMethods.processNfcTag() },
+                onClick = {
+                    val message = nfcMethods.processNfcTag()
+                    textReader.speakText(message ?: "No message found")
+                          },
                 shape = RoundedCornerShape(20),
                 modifier = Modifier
                     .padding(16.dp)
