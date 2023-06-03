@@ -10,11 +10,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.shoppinghelper.data.ViewModelProvider
 import com.example.shoppinghelper.products.ProductsViewModel
-
-
+import com.example.shoppinghelper.tagreader.NFCMethods
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,6 +23,7 @@ fun AddProduct(
     navigate: () -> Unit,
     productsViewModel: ProductsViewModel = viewModel(factory = ViewModelProvider.Factory)
 ) {
+    val nfcMethods = NFCMethods(LocalContext.current)
     val user = productsViewModel.user
     if (user != null) {
         var productName by remember { mutableStateOf("") }
@@ -42,12 +43,11 @@ fun AddProduct(
                 label = { Text("productType") }
             )
 
-            TextField(
-                value = nfcId,
-                onValueChange = { nfcId = it },
-                label = { Text("nfcId") }
-            )
+            Button(onClick = {
 
+            }) {
+                Text("Scan NFC")
+            }
             Button(onClick = {
                 productsViewModel.addProduct(user.userId, productName, productType, nfcId)
                 navigate()

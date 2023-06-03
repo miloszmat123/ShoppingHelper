@@ -2,6 +2,7 @@ package com.example.shoppinghelper.data
 
 import android.content.Context
 import com.example.shoppinghelper.auth.GoogleAuthUiClient
+import com.example.shoppinghelper.products.ProductDao
 import com.google.android.gms.auth.api.identity.Identity
 
 

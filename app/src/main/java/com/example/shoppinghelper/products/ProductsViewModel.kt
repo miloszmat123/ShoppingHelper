@@ -1,12 +1,8 @@
 package com.example.shoppinghelper.products
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoppinghelper.auth.GoogleAuthUiClient
-import com.example.shoppinghelper.data.Product
-import com.example.shoppinghelper.data.ProductDao
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch

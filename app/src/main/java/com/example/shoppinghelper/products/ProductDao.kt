@@ -1,10 +1,11 @@
-package com.example.shoppinghelper.data
+package com.example.shoppinghelper.products
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import com.example.shoppinghelper.products.Product
 import kotlinx.coroutines.flow.Flow
 
 
