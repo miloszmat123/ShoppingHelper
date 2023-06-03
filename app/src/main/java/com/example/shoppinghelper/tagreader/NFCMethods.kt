@@ -4,7 +4,7 @@ import android.content.Context
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.widget.Toast
-import com.example.shoppinghelper.tagreader.NFCManager
+import java.util.UUID
 import java.util.concurrent.CountDownLatch
 
 class NFCMethods(private val context: Context) {
@@ -13,7 +13,7 @@ class NFCMethods(private val context: Context) {
 
     private val nfcManager: NFCManager = NFCManager(context, nfcAdapter)
 
-    fun processNfcTag(): String? {
+    fun readNfcTag(): String? {
         if (nfcAdapter == null) {
             Toast.makeText(context, "NFC is not supported on this device.", Toast.LENGTH_SHORT)
                 .show()
@@ -44,6 +44,36 @@ class NFCMethods(private val context: Context) {
         Toast.makeText(context, "No NFC tag found.", Toast.LENGTH_SHORT).show()
         return null
     }
+    fun writeNfcTag(): String? {
+        if (nfcAdapter == null) {
+            Toast.makeText(context, "NFC is not supported on this device.", Toast.LENGTH_SHORT)
+                .show()
+            return null
+        }
+
+        // Check if NFC is enabled
+        if (!nfcAdapter.isEnabled) {
+            Toast.makeText(context, "Please enable NFC.", Toast.LENGTH_SHORT).show()
+            return null
+        }
+
+        // Enable foreground dispatch to capture NFC tag
+        nfcManager.enableNFC()
+
+        // Wait for the NFC tag to be scanned
+        val tag = waitForTag()
+
+        nfcManager.disableNFC()
+
+        if (tag != null) {
+            val nfcId = UUID.randomUUID().toString()
+            val message = nfcManager.writeNFC(tag, nfcId)
+            return nfcId
+        }
+
+        Toast.makeText(context, "No NFC tag found.", Toast.LENGTH_SHORT).show()
+        return null
+    }
 
 
     private fun waitForTag(): Tag? {
@@ -67,6 +97,8 @@ class NFCMethods(private val context: Context) {
 
         return discoveredTag
     }
+
+
 
 
 }

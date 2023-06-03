@@ -44,16 +44,20 @@ fun AddProduct(
             )
 
             Button(onClick = {
-
+                    nfcId = nfcMethods.writeNfcTag() ?: ""
             }) {
                 Text("Scan NFC")
             }
-            Button(onClick = {
-                productsViewModel.addProduct(user.userId, productName, productType, nfcId)
-                navigate()
-            }) {
-                Text("Submit")
+            if( nfcId != "") {
+                Button(onClick = {
+                    productsViewModel.addProduct(user.userId, productName, productType, nfcId)
+                    navigate()
+                })
+                {
+                    Text("Submit")
+                }
             }
+
         }
     }
 }

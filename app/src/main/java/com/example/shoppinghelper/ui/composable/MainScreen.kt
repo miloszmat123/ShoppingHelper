@@ -41,7 +41,7 @@ fun MainScreen(
         Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
             Button(
                 onClick = {
-                    val message = nfcMethods.processNfcTag()
+                    val message = nfcMethods.readNfcTag()
                     textReader.speakText(message ?: "No message found")
                           },
                 shape = RoundedCornerShape(20),

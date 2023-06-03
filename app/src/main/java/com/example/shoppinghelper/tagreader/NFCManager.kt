@@ -33,7 +33,7 @@ class NFCManager(private val context: Context, private val nfcAdapter: NfcAdapte
 
     fun readNFC(tag: Tag): String? {
         val ndef = Ndef.get(tag)
-//        ndef?.connect()
+        ndef?.connect()
         val ndefMessage = ndef?.cachedNdefMessage
         val data = ndefMessage?.records?.getOrNull(0)?.payload // Assuming there is only one record
         ndef?.close()
@@ -43,7 +43,7 @@ class NFCManager(private val context: Context, private val nfcAdapter: NfcAdapte
 
     fun writeNFC(tag: Tag, message: String) {
         val ndef = Ndef.get(tag)
-        ndef.connect()
+//        ndef.connect()
 
         val emptyNdefMessage = NdefMessage(arrayOf())
         ndef.writeNdefMessage(emptyNdefMessage)
