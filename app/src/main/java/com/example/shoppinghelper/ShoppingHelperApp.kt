@@ -21,6 +21,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.shoppinghelper.ui.composable.LoginGooglePanel
 import com.example.shoppinghelper.ui.composable.LoginPanel
 import com.example.shoppinghelper.ui.composable.MainScreen
 
@@ -76,7 +77,7 @@ fun ShoppingHelperApp(
                 MainScreen(navController = navController)
             }
             composable(route = Screens.LoginPanel.name) {
-                LoginPanel(navController = navController)
+                LoginGooglePanel()
             }
         }
     }

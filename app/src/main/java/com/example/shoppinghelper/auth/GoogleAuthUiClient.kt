@@ -38,7 +38,7 @@ class GoogleAuthUiClient(
         val googleCredentials = GoogleAuthProvider.getCredential(googleIdToken, null)
         return try {
             val user = auth.signInWithCredential(googleCredentials).await().user
-            user?.run { UserData(user.uid) }
+            user?.run { UserData(uid) }
         } catch (e: Exception) {
             if (e is CancellationException) throw e
             e.printStackTrace()
