@@ -24,11 +24,15 @@ import com.example.shoppinghelper.auth.LoginViewModel
 
 @Composable
 fun LoginGooglePanel(
-    viewModel: LoginViewModel = viewModel(factory = ViewModelProvider.Factory),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigate: () -> Unit,
+    viewModel: LoginViewModel = viewModel(factory = ViewModelProvider.Factory)
 )
 {
     LaunchedEffect(viewModel.loginState) {
+        if(viewModel.loginState) {
+            navigate()
+        }
     }
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartIntentSenderForResult(),
