@@ -11,5 +11,5 @@ data class Product (
     val userId: String,
     val productName: String,
     val productType: String,
-    val nfcID: String
+    val nfcId: String
 )
