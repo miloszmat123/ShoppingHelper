@@ -33,27 +33,32 @@ class NFCManager(private val context: Context, private val nfcAdapter: NfcAdapte
 
     fun readNFC(tag: Tag): String? {
         val ndef = Ndef.get(tag)
-        ndef?.connect()
         val ndefMessage = ndef?.cachedNdefMessage
         val data = ndefMessage?.records?.getOrNull(0)?.payload // Assuming there is only one record
-        ndef?.close()
         return data?.decodeToString()
     }
 
 
+
     fun writeNFC(tag: Tag, message: String) {
         val ndef = Ndef.get(tag)
-//        ndef.connect()
-
-        val emptyNdefMessage = NdefMessage(arrayOf())
-        ndef.writeNdefMessage(emptyNdefMessage)
-
-        val ndefRecord = NdefRecord.createTextRecord(null, message)
-        val ndefMessage = NdefMessage(arrayOf(ndefRecord))
-
-        ndef.writeNdefMessage(ndefMessage)
-
-        ndef.close()
+        try {
+            ndef.connect()
+            val ndefRecord = NdefRecord.createTextRecord(null, message)
+            val ndefMessage = NdefMessage(arrayOf(ndefRecord))
+            ndef.writeNdefMessage(ndefMessage)
+        } catch (e: Exception) {
+            // Log the exception
+            e.printStackTrace()
+        } finally {
+            try {
+                ndef.close()
+            } catch (e: Exception) {
+                // Log the exception
+                e.printStackTrace()
+            }
+        }
     }
+
 
 }
