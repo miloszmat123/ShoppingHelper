@@ -12,7 +12,7 @@ class ProductsViewModel(
     private val productDao: ProductDao
 ) : ViewModel() {
     val user = googleAuthUiClient.getSignedInUser()
-    val userId = user?.userId
+
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
     }
@@ -23,7 +23,9 @@ class ProductsViewModel(
         }
     }
 
-    fun getProducts(userId: String) = productDao.getProductsByUserId(userId).stateIn(viewModelScope, SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), emptyList())
+    fun getProductsByUserId(userId: String) = productDao.getProductsByUserId(userId).stateIn(viewModelScope, SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), emptyList())
+
+    fun getProductsByNfcId(nfcId: String) = productDao.getProductsByNfcId(nfcId).stateIn(viewModelScope, SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), emptyList())
 
     fun addProduct(userId: String, productName: String, productType: String, nfcId: String) = viewModelScope.launch {
         val product = Product(userId = userId, productName = productName, productType = productType, nfcID = nfcId)

@@ -5,7 +5,6 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.example.shoppinghelper.products.Product
 import kotlinx.coroutines.flow.Flow
 
 
@@ -23,4 +22,7 @@ interface ProductDao {
 
     @Query("SELECT * FROM products WHERE userId = :userId")
     fun getProductsByUserId(userId: String): Flow<List<Product>>
+
+    @Query("SELECT * FROM products WHERE nfcID = :nfcId")
+    fun getProductsByNfcId(nfcId: String): Flow<List<Product>>
 }
