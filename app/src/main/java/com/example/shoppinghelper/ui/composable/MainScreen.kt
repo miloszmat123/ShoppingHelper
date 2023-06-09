@@ -9,6 +9,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -17,17 +19,23 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.shoppinghelper.tagreader.NFCMethods
 import com.example.shoppinghelper.R
+import com.example.shoppinghelper.data.ViewModelProvider
+import com.example.shoppinghelper.products.ProductsViewModel
+import com.example.shoppinghelper.tagreader.NFCMethods
 import com.example.shoppinghelper.tagreader.TextReader
 
 @Composable
 fun MainScreen(
-    navController: NavController
+    navController: NavController,
+    productsViewModel: ProductsViewModel = viewModel(factory = ViewModelProvider.Factory)
 ) {
+
     val nfcMethods = NFCMethods(LocalContext.current)
     val textReader = TextReader(LocalContext.current)
+    val products by productsViewModel.products.collectAsState()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -37,13 +45,19 @@ fun MainScreen(
         Text(
             text = stringResource(id = R.string.main_screen_text),
             fontSize = 30.sp,
-            textAlign = TextAlign.Center)
+            textAlign = TextAlign.Center
+        )
         Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
             Button(
                 onClick = {
-                    val message = nfcMethods.readNfcTag()
-                    textReader.speakText(message ?: "No message found")
-                          },
+                    val nfcId = nfcMethods.readNfcTag()?.substring(3)
+                    val product = products.firstOrNull { it.nfcId == nfcId }
+                    if (product != null) {
+                        val message =
+                            "Product name is ${products[0].productName} and product type is ${products[0].productType}"
+                        textReader.speakText(message)
+                    }
+                },
                 shape = RoundedCornerShape(20),
                 modifier = Modifier
                     .padding(16.dp)
