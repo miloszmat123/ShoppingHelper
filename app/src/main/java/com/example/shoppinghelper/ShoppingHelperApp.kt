@@ -46,7 +46,8 @@ enum class Screens(@StringRes val title: Int) {
 fun ShoppingHelperApp(
     navController: NavHostController = rememberNavController()
 ) {
-    val userProductsViewModel: UserProductsViewModel = viewModel(factory = ViewModelProvider.Factory)
+    val userProductsViewModel: UserProductsViewModel =
+        viewModel(factory = ViewModelProvider.Factory)
     Scaffold(
         topBar = {
             val currentRoute =
@@ -93,7 +94,7 @@ fun ShoppingHelperApp(
                 )
             }
             composable(route = Screens.Main.name) {
-                MainScreen(navController = navController)
+                MainScreen()
             }
             composable(route = Screens.LoginPanel.name) {
                 LoginGooglePanel(

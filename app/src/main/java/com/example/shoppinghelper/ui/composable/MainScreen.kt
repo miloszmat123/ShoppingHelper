@@ -20,7 +20,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import com.example.shoppinghelper.R
 import com.example.shoppinghelper.data.ViewModelProvider
 import com.example.shoppinghelper.products.ProductsViewModel
@@ -29,7 +28,6 @@ import com.example.shoppinghelper.tagreader.TextReader
 
 @Composable
 fun MainScreen(
-    navController: NavController,
     productsViewModel: ProductsViewModel = viewModel(factory = ViewModelProvider.Factory)
 ) {
 

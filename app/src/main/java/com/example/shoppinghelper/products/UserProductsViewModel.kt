@@ -38,8 +38,4 @@ class UserProductsViewModel(
         val product = Product(id = id, userId = userId, productName = productName, productType = productType, nfcId = nfcId)
         productDao.update(product)
     }
-
-    fun getProductById(id: Int) = viewModelScope.launch {
-        productDao.getProductById(id)
-    }
 }
