@@ -48,6 +48,7 @@ fun EditProduct(
             if (nfcId != "") {
                 Button(onClick = {
                     userProductsViewModel.updateProduct(
+                        currentProductId,
                         user.userId,
                         productName,
                         productType,

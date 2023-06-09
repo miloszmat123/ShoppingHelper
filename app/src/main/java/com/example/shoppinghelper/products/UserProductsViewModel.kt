@@ -34,8 +34,8 @@ class UserProductsViewModel(
         productDao.delete(product)
     }
 
-    fun updateProduct(userId: String, productName: String, productType: String, nfcId: String) = viewModelScope.launch {
-        val product = Product(userId = userId, productName = productName, productType = productType, nfcId = nfcId)
+    fun updateProduct(id: Int, userId: String, productName: String, productType: String, nfcId: String) = viewModelScope.launch {
+        val product = Product(id = id, userId = userId, productName = productName, productType = productType, nfcId = nfcId)
         productDao.update(product)
     }
 

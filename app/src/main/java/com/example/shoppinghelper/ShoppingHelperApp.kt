@@ -16,11 +16,14 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.shoppinghelper.data.ViewModelProvider
+import com.example.shoppinghelper.products.UserProductsViewModel
 import com.example.shoppinghelper.ui.composable.AddProduct
 import com.example.shoppinghelper.ui.composable.EditProduct
 import com.example.shoppinghelper.ui.composable.LoginGooglePanel
@@ -43,6 +46,7 @@ enum class Screens(@StringRes val title: Int) {
 fun ShoppingHelperApp(
     navController: NavHostController = rememberNavController()
 ) {
+    val userProductsViewModel: UserProductsViewModel = viewModel(factory = ViewModelProvider.Factory)
     Scaffold(
         topBar = {
             val currentRoute =
@@ -82,6 +86,7 @@ fun ShoppingHelperApp(
             startDestination = Screens.StartScreen.name,
             modifier = Modifier.padding(innerPadding)
         ) {
+
             composable(route = Screens.StartScreen.name) {
                 StartScreen(
                     navigate = { navController.navigate(Screens.Main.name) }
@@ -105,21 +110,26 @@ fun ShoppingHelperApp(
                         navController.navigate(Screens.Main.name)
                     },
                     navigate_add = { navController.navigate(Screens.AddProduct.name) },
-                    navigate_edit = { productId: Int -> navController.navigate("${Screens.EditProduct.name}/$productId") }
+                    navigate_edit = { productId: Int -> navController.navigate("${Screens.EditProduct.name}/$productId") },
+                    userProductsViewModel
                 )
             }
             composable(route = Screens.AddProduct.name) {
                 AddProduct(
-                    navigate = { navController.navigate(Screens.ProductList.name) }
+                    navigate = { navController.navigate(Screens.ProductList.name) },
+                    userProductsViewModel
                 )
             }
             composable(route = "${Screens.EditProduct.name}/{productId}") { backStackEntry ->
                 val arguments = requireNotNull(backStackEntry.arguments)
-                val productId = arguments.getInt("productId")
-                EditProduct(
-                    navigate = { navController.navigate(Screens.ProductList.name) },
-                    productId
-                )
+                val productId = arguments.getString("productId")?.toIntOrNull()
+                if (productId != null) {
+                    EditProduct(
+                        navigate = { navController.navigate(Screens.ProductList.name) },
+                        productId,
+                        userProductsViewModel
+                    )
+                }
             }
 
         }
