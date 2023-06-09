@@ -14,6 +14,8 @@ class ProductsViewModel(
 ) : ViewModel() {
     val user = googleAuthUiClient.getSignedInUser()
 
+    val products = productDao.getAllProducts().stateIn(viewModelScope, SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), emptyList())
+
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
     }

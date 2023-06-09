@@ -25,4 +25,7 @@ interface ProductDao {
 
     @Query("SELECT * FROM products WHERE nfcId = :nfcId")
     fun getProductsByNfcId(nfcId: String): Flow<List<Product>>
+
+    @Query("SELECT * FROM products")
+    fun getAllProducts(): Flow<List<Product>>
 }
