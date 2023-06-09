@@ -13,7 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.shoppinghelper.data.ViewModelProvider
-import com.example.shoppinghelper.products.ProductsViewModel
+import com.example.shoppinghelper.products.UserProductsViewModel
 import com.example.shoppinghelper.tagreader.NFCMethods
 
 
@@ -21,10 +21,10 @@ import com.example.shoppinghelper.tagreader.NFCMethods
 @Composable
 fun AddProduct(
     navigate: () -> Unit,
-    productsViewModel: ProductsViewModel = viewModel(factory = ViewModelProvider.Factory)
+    userProductsViewModel: UserProductsViewModel = viewModel(factory = ViewModelProvider.Factory)
 ) {
     val nfcMethods = NFCMethods(LocalContext.current)
-    val user = productsViewModel.user
+    val user = userProductsViewModel.user
     if (user != null) {
         var productName by remember { mutableStateOf("") }
         var productType by remember { mutableStateOf("") }
@@ -50,7 +50,7 @@ fun AddProduct(
             }
             if( nfcId != "") {
                 Button(onClick = {
-                    productsViewModel.addProduct(user.userId, productName, productType, nfcId)
+                    userProductsViewModel.addProduct(user.userId, productName, productType, nfcId)
                     navigate()
                 })
                 {
