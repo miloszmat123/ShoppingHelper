@@ -25,11 +25,21 @@ class UserProductsViewModel(
         }
     }
 
-
-    fun getProductsByNfcId(nfcId: String) = productDao.getProductsByNfcId(nfcId).stateIn(viewModelScope, SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), emptyList())
-
     fun addProduct(userId: String, productName: String, productType: String, nfcId: String) = viewModelScope.launch {
         val product = Product(userId = userId, productName = productName, productType = productType, nfcId = nfcId)
         productDao.insert(product)
+    }
+
+    fun deleteProduct(product: Product) = viewModelScope.launch {
+        productDao.delete(product)
+    }
+
+    fun updateProduct(userId: String, productName: String, productType: String, nfcId: String) = viewModelScope.launch {
+        val product = Product(userId = userId, productName = productName, productType = productType, nfcId = nfcId)
+        productDao.update(product)
+    }
+
+    fun getProductById(id: Int) = viewModelScope.launch {
+        productDao.getProductById(id)
     }
 }

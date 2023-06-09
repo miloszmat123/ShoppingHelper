@@ -3,7 +3,8 @@
     <string name="start_screen">  </string>
     <string name="login_panel">Login Panel</string>
     <string name="product_list">Product List</string>
-    <string name="add_edit_product">Edit Product</string>
+    <string name="add_product">Add Product</string>
+    <string name="edit_product">Edit Product</string>
     <string name="main_screen_text">Click a button to read NFC tag on a shelf!</string>
     <string name="web_client_id">962308405935-o61ob0s8g0hech64qmkik1pufjgfelou.apps.googleusercontent.com</string>
 </resources>

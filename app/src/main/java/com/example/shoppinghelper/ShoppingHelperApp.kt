@@ -22,6 +22,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.shoppinghelper.ui.composable.AddProduct
+import com.example.shoppinghelper.ui.composable.EditProduct
 import com.example.shoppinghelper.ui.composable.LoginGooglePanel
 import com.example.shoppinghelper.ui.composable.MainScreen
 import com.example.shoppinghelper.ui.composable.ProductList
@@ -32,7 +33,8 @@ enum class Screens(@StringRes val title: Int) {
     Main(title = R.string.app_name),
     LoginPanel(title = R.string.login_panel),
     ProductList(title = R.string.product_list),
-    AddProduct(title = R.string.add_edit_product),
+    AddProduct(title = R.string.add_product),
+    EditProduct(title = R.string.edit_product),
     StartScreen(title = R.string.start_screen)
 }
 
@@ -101,7 +103,8 @@ fun ShoppingHelperApp(
                 ProductList(
                     navigate = { navController.navigate(Screens.Main.name)
                     },
-                    navigate_add = { navController.navigate(Screens.AddProduct.name) }
+                    navigate_add = { navController.navigate(Screens.AddProduct.name) },
+                    navigate_edit = { productId: Int -> navController.navigate("${Screens.EditProduct.name}/$productId") }
                 )
             }
             composable(route = Screens.AddProduct.name) {
@@ -109,6 +112,12 @@ fun ShoppingHelperApp(
                     navigate = { navController.navigate(Screens.ProductList.name) }
                 )
             }
+            composable(route = "${Screens.EditProduct.name}/{productId}") { backStackEntry ->
+                val arguments = requireNotNull(backStackEntry.arguments)
+                val productId = arguments.getInt("productId")
+                EditProduct(navigate = { navController.navigate(Screens.ProductList.name) }, productId)
+            }
+
         }
     }
 }

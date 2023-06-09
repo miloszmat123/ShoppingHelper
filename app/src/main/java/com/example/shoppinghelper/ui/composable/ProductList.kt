@@ -14,7 +14,8 @@ import com.example.shoppinghelper.products.UserProductsViewModel
 fun ProductList(
     navigate: () -> Unit,
     navigate_add: () -> Unit,
-    userProductsViewModel: UserProductsViewModel = viewModel(factory = ViewModelProvider.Factory)
+    navigate_edit: (Int) -> Unit,
+    userProductsViewModel: UserProductsViewModel = viewModel(key = "productVMKey", factory = ViewModelProvider.Factory)
 ) {
 
     val user = userProductsViewModel.user
@@ -30,7 +31,19 @@ fun ProductList(
             }
             products.forEach(
                 action = {
-                    Text(text = it.productName + " " + it.productType + " " + it.nfcId)
+                    Text(text = it.productName + " " + it.productType)
+                    Button(onClick = {
+                        userProductsViewModel.deleteProduct(it)
+                    }
+                    ) {
+                        Text("Delete")
+                    }
+                    Button(onClick = {
+                        navigate_edit(it.id)
+                    }
+                    ) {
+                        Text("Edit")
+                    }
                 }
             )
             Button(onClick = { navigate_add() }) {
