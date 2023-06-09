@@ -8,22 +8,22 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.shoppinghelper.data.ViewModelProvider
-import com.example.shoppinghelper.products.ProductsViewModel
+import com.example.shoppinghelper.products.UserProductsViewModel
 
 @Composable
 fun ProductList(
     navigate: () -> Unit,
     navigate_add: () -> Unit,
-    productsViewModel: ProductsViewModel = viewModel(factory = ViewModelProvider.Factory)
+    userProductsViewModel: UserProductsViewModel = viewModel(factory = ViewModelProvider.Factory)
 ){
 
-    val user = productsViewModel.user
+    val user = userProductsViewModel.user
     if (user != null) {
-        val products by  productsViewModel.getProductsByUserId(user.userId).collectAsState()
+        val products by  userProductsViewModel.productsByUserId.collectAsState()
         Column() {
             Text(text = user.userId)
             Button(onClick = {
-                productsViewModel.signOut()
+                userProductsViewModel.signOut()
                 navigate()
             }) {
                 Text("Logout")

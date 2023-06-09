@@ -3,19 +3,18 @@ package com.example.shoppinghelper.products
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoppinghelper.auth.GoogleAuthUiClient
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class ProductsViewModel(
+class UserProductsViewModel(
     private val googleAuthUiClient: GoogleAuthUiClient,
     private val productDao: ProductDao
 ) : ViewModel() {
     val user = googleAuthUiClient.getSignedInUser()
 
     val products = productDao.getAllProducts().stateIn(viewModelScope, SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), emptyList())
-
+    val productsByUserId = productDao.getProductsByUserId(user?.userId ?: "").stateIn(viewModelScope, SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), emptyList())
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
     }
@@ -26,7 +25,6 @@ class ProductsViewModel(
         }
     }
 
-    fun getProductsByUserId(userId: String) = productDao.getProductsByUserId(userId).stateIn(viewModelScope, SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), emptyList())
 
     fun getProductsByNfcId(nfcId: String) = productDao.getProductsByNfcId(nfcId).stateIn(viewModelScope, SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), emptyList())
 
