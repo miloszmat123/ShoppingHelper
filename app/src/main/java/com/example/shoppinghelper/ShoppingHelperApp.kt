@@ -101,7 +101,8 @@ fun ShoppingHelperApp(
             }
             composable(route = Screens.ProductList.name) {
                 ProductList(
-                    navigate = { navController.navigate(Screens.Main.name)
+                    navigate = {
+                        navController.navigate(Screens.Main.name)
                     },
                     navigate_add = { navController.navigate(Screens.AddProduct.name) },
                     navigate_edit = { productId: Int -> navController.navigate("${Screens.EditProduct.name}/$productId") }
@@ -115,7 +116,10 @@ fun ShoppingHelperApp(
             composable(route = "${Screens.EditProduct.name}/{productId}") { backStackEntry ->
                 val arguments = requireNotNull(backStackEntry.arguments)
                 val productId = arguments.getInt("productId")
-                EditProduct(navigate = { navController.navigate(Screens.ProductList.name) }, productId)
+                EditProduct(
+                    navigate = { navController.navigate(Screens.ProductList.name) },
+                    productId
+                )
             }
 
         }

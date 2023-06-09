@@ -14,14 +14,16 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.shoppinghelper.data.ViewModelProvider
 import com.example.shoppinghelper.products.UserProductsViewModel
-import java.lang.Thread.sleep
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditProduct(
     navigate: () -> Unit,
     currentProductId: Int,
-    userProductsViewModel: UserProductsViewModel = viewModel(key = "productVMKey",factory = ViewModelProvider.Factory)
+    userProductsViewModel: UserProductsViewModel = viewModel(
+        key = "productVMKey",
+        factory = ViewModelProvider.Factory
+    )
 ) {
     val user = userProductsViewModel.user
     val products by userProductsViewModel.productsByUserId.collectAsState()
