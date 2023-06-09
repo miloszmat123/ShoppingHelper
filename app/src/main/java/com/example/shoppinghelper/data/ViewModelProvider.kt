@@ -5,6 +5,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.shoppinghelper.auth.LoginViewModel
+import com.example.shoppinghelper.products.ProductsViewModel
 import com.example.shoppinghelper.products.UserProductsViewModel
 
 object ViewModelProvider {
@@ -18,6 +19,11 @@ object ViewModelProvider {
         initializer {
             UserProductsViewModel(
                 containerApplication().container.googleAuthUiClient,
+                containerApplication().container.productDao
+            )
+        }
+        initializer {
+            ProductsViewModel(
                 containerApplication().container.productDao
             )
         }
