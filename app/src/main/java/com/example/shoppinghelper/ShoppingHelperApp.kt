@@ -99,10 +99,7 @@ fun ShoppingHelperApp(
             }
             composable(route = Screens.ProductList.name) {
                 ProductList(
-                    navigate = {
-                        navController.navigate(Screens.LoginPanel.name) {
-                            popUpTo(Screens.LoginPanel.name) { inclusive = true }
-                        }
+                    navigate = { navController.navigate(Screens.Main.name)
                     },
                     navigate_add = { navController.navigate(Screens.AddProduct.name) }
                 )
