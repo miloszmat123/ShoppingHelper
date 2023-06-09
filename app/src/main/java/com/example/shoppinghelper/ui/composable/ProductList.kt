@@ -15,11 +15,11 @@ fun ProductList(
     navigate: () -> Unit,
     navigate_add: () -> Unit,
     userProductsViewModel: UserProductsViewModel = viewModel(factory = ViewModelProvider.Factory)
-){
+) {
 
     val user = userProductsViewModel.user
     if (user != null) {
-        val products by  userProductsViewModel.productsByUserId.collectAsState()
+        val products by userProductsViewModel.productsByUserId.collectAsState()
         Column() {
             Text(text = user.userId)
             Button(onClick = {

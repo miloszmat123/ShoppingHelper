@@ -23,9 +23,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.shoppinghelper.ui.composable.AddProduct
 import com.example.shoppinghelper.ui.composable.LoginGooglePanel
-import com.example.shoppinghelper.ui.composable.LoginPanel
 import com.example.shoppinghelper.ui.composable.MainScreen
 import com.example.shoppinghelper.ui.composable.ProductList
+import com.example.shoppinghelper.ui.composable.StartScreen
 
 
 enum class Screens(@StringRes val title: Int) {
@@ -33,6 +33,7 @@ enum class Screens(@StringRes val title: Int) {
     LoginPanel(title = R.string.login_panel),
     ProductList(title = R.string.product_list),
     AddProduct(title = R.string.add_edit_product),
+    StartScreen(title = R.string.start_screen)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -76,24 +77,33 @@ fun ShoppingHelperApp(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screens.Main.name,
+            startDestination = Screens.StartScreen.name,
             modifier = Modifier.padding(innerPadding)
         ) {
+            composable(route = Screens.StartScreen.name) {
+                StartScreen(
+                    navigate = { navController.navigate(Screens.Main.name) }
+                )
+            }
             composable(route = Screens.Main.name) {
                 MainScreen(navController = navController)
             }
             composable(route = Screens.LoginPanel.name) {
                 LoginGooglePanel(
-                    navigate = { navController.navigate(Screens.ProductList.name){
-                        popUpTo(Screens.ProductList.name) { inclusive = true }
-                    } }
+                    navigate = {
+                        navController.navigate(Screens.ProductList.name) {
+                            popUpTo(Screens.ProductList.name) { inclusive = true }
+                        }
+                    }
                 )
             }
             composable(route = Screens.ProductList.name) {
                 ProductList(
-                    navigate = { navController.navigate(Screens.LoginPanel.name){
-                        popUpTo(Screens.LoginPanel.name) { inclusive = true }
-                    } },
+                    navigate = {
+                        navController.navigate(Screens.LoginPanel.name) {
+                            popUpTo(Screens.LoginPanel.name) { inclusive = true }
+                        }
+                    },
                     navigate_add = { navController.navigate(Screens.AddProduct.name) }
                 )
             }
