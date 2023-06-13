@@ -52,7 +52,7 @@ fun MainScreen(
                     val product = products.firstOrNull { it.nfcId == nfcId }
                     if (product != null) {
                         val message =
-                            "Product name is ${products[0].productName} and product type is ${products[0].productType}"
+                            "Product name is ${product.productName} and product type is ${product.productType}"
                         textReader.speakText(message)
                     }
                 },
