@@ -26,6 +26,7 @@ import com.example.shoppinghelper.auth.LoginViewModel
 fun LoginGooglePanel(
     modifier: Modifier = Modifier,
     navigate: () -> Unit,
+    refresh: () -> Unit,
     viewModel: LoginViewModel = viewModel(factory = ViewModelProvider.Factory)
 )
 {
@@ -64,6 +65,7 @@ fun LoginGooglePanel(
         Spacer(modifier = Modifier.height(48.dp))
         Button(
             onClick = {
+                refresh()
                 viewModel.signIn(launcher)
             },
             colors = ButtonDefaults.buttonColors(

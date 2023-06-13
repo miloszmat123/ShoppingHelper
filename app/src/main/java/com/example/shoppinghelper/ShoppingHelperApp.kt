@@ -48,6 +48,8 @@ fun ShoppingHelperApp(
 ) {
     val userProductsViewModel: UserProductsViewModel =
         viewModel(factory = ViewModelProvider.Factory)
+    val refresh = {
+        userProductsViewModel.refresh()}
     Scaffold(
         topBar = {
             val currentRoute =
@@ -66,7 +68,7 @@ fun ShoppingHelperApp(
                                 navController.navigate(Screens.Main.name)
                             }
                         ) {
-                            Icon(Icons.Filled.Nfc, contentDescription = "Admin Panel")
+                            Icon(Icons.Filled.Nfc, contentDescription = "NFC Reader")
                         }
                     }
                     if (!showNFCButton) {
@@ -105,7 +107,8 @@ fun ShoppingHelperApp(
                         navController.navigate(Screens.ProductList.name) {
                             popUpTo(Screens.ProductList.name) { inclusive = true }
                         }
-                    }
+                    },
+                    refresh = refresh
                 )
             }
             composable(route = Screens.ProductList.name) {
@@ -115,6 +118,7 @@ fun ShoppingHelperApp(
                     },
                     navigate_add = { navController.navigate(Screens.AddProduct.name) },
                     navigate_edit = { productId: Int -> navController.navigate("${Screens.EditProduct.name}/$productId") },
+                    refresh = refresh,
                     userProductsViewModel
                 )
             }

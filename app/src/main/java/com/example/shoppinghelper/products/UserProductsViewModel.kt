@@ -11,10 +11,10 @@ class UserProductsViewModel(
     private val googleAuthUiClient: GoogleAuthUiClient,
     private val productDao: ProductDao
 ) : ViewModel() {
-    val user = googleAuthUiClient.getSignedInUser()
+    var user = googleAuthUiClient.getSignedInUser()
 
-    val products = productDao.getAllProducts().stateIn(viewModelScope, SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), emptyList())
-    val productsByUserId = productDao.getProductsByUserId(user?.userId ?: "").stateIn(viewModelScope, SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), emptyList())
+    var products = productDao.getAllProducts().stateIn(viewModelScope, SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), emptyList())
+    var productsByUserId = productDao.getProductsByUserId(user?.userId ?: "").stateIn(viewModelScope, SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), emptyList())
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
     }
@@ -37,5 +37,11 @@ class UserProductsViewModel(
     fun updateProduct(id: Int, userId: String, productName: String, productType: String, nfcId: String) = viewModelScope.launch {
         val product = Product(id = id, userId = userId, productName = productName, productType = productType, nfcId = nfcId)
         productDao.update(product)
+    }
+
+    fun refresh(){
+        user = googleAuthUiClient.getSignedInUser()
+        products = productDao.getAllProducts().stateIn(viewModelScope, SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), emptyList())
+        productsByUserId = productDao.getProductsByUserId(user?.userId ?: "").stateIn(viewModelScope, SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), emptyList())
     }
 }
