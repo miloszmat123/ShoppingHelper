@@ -16,6 +16,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -38,7 +39,19 @@ enum class Screens(@StringRes val title: Int) {
     ProductList(title = R.string.product_list),
     AddProduct(title = R.string.add_product),
     EditProduct(title = R.string.edit_product),
-    StartScreen(title = R.string.start_screen)
+    StartScreen(title = R.string.start_screen);
+    companion object {
+        fun valueFromString(name: String): Int {
+            return when(name){
+                "Main" -> Main.title
+                "LoginPanel" -> LoginPanel.title
+                "ProductList" -> ProductList.title
+                "AddProduct" -> AddProduct.title
+                "StartScreen" -> StartScreen.title
+                else -> {R.string.edit_product}
+            }
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,8 +72,9 @@ fun ShoppingHelperApp(
                     currentRoute == Screens.AddProduct.name ||
                     currentRoute == Screens.EditProduct.name
 
+
             TopAppBar(
-                title = { Text(text = currentRoute.toString()) },
+                title = { Text(text = stringResource(Screens.valueFromString(currentRoute.toString()))) },
                 actions = {
                     if (showNFCButton) {
                         IconButton(
