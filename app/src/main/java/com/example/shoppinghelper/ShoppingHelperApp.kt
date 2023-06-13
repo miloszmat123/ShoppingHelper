@@ -5,7 +5,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Nfc
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -52,21 +52,24 @@ fun ShoppingHelperApp(
         topBar = {
             val currentRoute =
                 navController.currentBackStackEntryAsState().value?.destination?.route
-            val showBackButton = currentRoute == Screens.LoginPanel.name ||
+            val showNFCButton = currentRoute == Screens.LoginPanel.name ||
                     currentRoute == Screens.ProductList.name ||
-                    currentRoute == Screens.AddProduct.name
+                    currentRoute == Screens.AddProduct.name ||
+                    currentRoute == Screens.EditProduct.name
 
             TopAppBar(
                 title = { Text(text = currentRoute.toString()) },
-                navigationIcon = {
-                    if (showBackButton) {
-                        IconButton(onClick = { navController.navigate(Screens.Main.name) }) {
-                            Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                actions = {
+                    if (showNFCButton) {
+                        IconButton(
+                            onClick = {
+                                navController.navigate(Screens.Main.name)
+                            }
+                        ) {
+                            Icon(Icons.Filled.Nfc, contentDescription = "Admin Panel")
                         }
                     }
-                },
-                actions = {
-                    if (!showBackButton) {
+                    if (!showNFCButton) {
                         IconButton(
                             onClick = {
                                 navController.navigate(Screens.LoginPanel.name)
